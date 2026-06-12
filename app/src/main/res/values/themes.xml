@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main app theme – now using Material3 -->
+    <style name="Theme.Bondhu" parent="Theme.Material3.Light.NoActionBar">
+        <!-- (optional) customise colours here -->
+    </style>
 
-    <style name="Theme.Bondhu" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Splash theme that the system uses before your app starts -->
+    <style name="Theme.Bondhu.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/icon</item>
+        <!-- Duration the icon stays visible (ms). 0 = until you dismiss it manually -->
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Bondhu</item>
+    </style>
 </resources>
