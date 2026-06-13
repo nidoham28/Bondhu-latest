@@ -130,10 +130,6 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(Modifier.height(72.dp))
-            AppBrand()
-            Spacer(Modifier.height(36.dp))
-
             /* Global API error banner */
             uiState.errorMessage?.let { error ->
                 ErrorBanner(message = error)
@@ -218,25 +214,6 @@ fun LoginScreen(
             modifier  = Modifier.align(Alignment.BottomCenter)
         )
     }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared composables
-// ─────────────────────────────────────────────────────────────────────────────
-
-@Composable
-private fun AppBrand() {
-    Box(
-        modifier = Modifier
-            .size(120.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(R.drawable.icon),
-            contentDescription = "Bondhu logo"
-        )
-    }
-    Spacer(Modifier.height(20.dp))
 }
 
 @Composable
