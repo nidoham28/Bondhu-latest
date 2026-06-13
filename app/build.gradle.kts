@@ -58,6 +58,12 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.lifecycle.viewmodel.compose) // check latest version
+    implementation(libs.androidx.navigation.compose)
+
+    // image loading for the profile pic
+    implementation(libs.coil.compose)
+
     // Supabase
     implementation(platform(libs.bom))
     implementation(libs.supabase.kt)
@@ -83,6 +89,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    // material icons extended (for CameraAlt, Visibility, etc.)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // Testing
     testImplementation(libs.junit)

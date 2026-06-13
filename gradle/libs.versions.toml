@@ -1,5 +1,6 @@
 [versions]
 agp = "9.2.1"
+coilCompose = "2.7.0"
 kotlin = "2.4.0"
 composeBom = "2026.05.01"
 coreKtx = "1.19.0"
@@ -12,15 +13,21 @@ ktorClientAndroid = "3.5.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.13.0"
 appcompat = "1.7.1"
+lifecycleViewmodelCompose = "2.10.0"
 material = "1.14.0"
+navigationCompose = "2.9.8"
 timber = "5.0.1"
 bom = "3.6.0"
 ksp = "2.3.4"
 
 [libraries]
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "bom" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 functions-kt = { module = "io.github.jan-tennert.supabase:functions-kt" }
 auth-kt = { module = "io.github.jan-tennert.supabase:auth-kt" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

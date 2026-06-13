@@ -12,20 +12,10 @@ import timber.log.Timber
 
 class BondhuApp : Application() {
 
-    // Singleton client – accessible globally
-    lateinit var supabase: SupabaseClient
-        private set
-
-    override fun onCreate() {
-        super.onCreate()
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-
-        // Initialize Supabase
-        supabase = createSupabaseClient(
-            supabaseUrl = BuildConfig.SUPABASE_URL,      // you'll define these
+    // Thread-safe, created on first access
+    val supabase: SupabaseClient by lazy {
+        createSupabaseClient(
+            supabaseUrl = BuildConfig.SUPABASE_URL,
             supabaseKey = BuildConfig.SUPABASE_ANON_KEY
         ) {
             install(Auth)
@@ -33,9 +23,15 @@ class BondhuApp : Application() {
             install(Realtime)
             install(Storage)
             install(Functions)
-            // Optional: configure each module here
         }
+    }
 
-        Timber.d("Supabase client initialized")
+    override fun onCreate() {
+        super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+        Timber.d("Supabase client ready")
     }
 }
