@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -63,6 +64,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -74,23 +76,19 @@ import coil.compose.AsyncImage
 import com.nidoham.bondhu.AuthEvent
 import com.nidoham.bondhu.AuthTab
 import com.nidoham.bondhu.LoginViewModel
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Palette
-// ─────────────────────────────────────────────────────────────────────────────
-private val BgDeep          = Color(0xFF0D1117)
-private val BgSurface       = Color(0xFF161B22)
-private val BgInput         = Color(0xFF0D1117)
-private val BgPill          = Color(0xFF0D1117)
-private val AccentPrimary   = Color(0xFF6E57E0)
-private val AccentSecondary = Color(0xFF9B8AFF)
-private val AccentGreen     = Color(0xFF3DD68C)
-private val AccentError     = Color(0xFFFF6B6B)
-private val TextPrimary     = Color(0xFFF0F6FC)
-private val TextSecondary   = Color(0xFF8B949E)
-private val TextHint        = Color(0xFF484F58)
-private val BorderDefault   = Color(0xFF30363D)
-private val BorderFocused   = Color(0xFF6E57E0)
+import com.nidoham.bondhu.R
+import com.nidoham.bondhu.ui.theme.AccentError
+import com.nidoham.bondhu.ui.theme.AccentGreen
+import com.nidoham.bondhu.ui.theme.AccentPrimary
+import com.nidoham.bondhu.ui.theme.AccentSecondary
+import com.nidoham.bondhu.ui.theme.BgDeep
+import com.nidoham.bondhu.ui.theme.BgInput
+import com.nidoham.bondhu.ui.theme.BgSurface
+import com.nidoham.bondhu.ui.theme.BorderDefault
+import com.nidoham.bondhu.ui.theme.BorderFocused
+import com.nidoham.bondhu.ui.theme.TextHint
+import com.nidoham.bondhu.ui.theme.TextPrimary
+import com.nidoham.bondhu.ui.theme.TextSecondary
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Root screen
@@ -129,6 +127,7 @@ fun LoginScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(Modifier.height(72.dp))
@@ -151,12 +150,6 @@ fun LoginScreen(
                     modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    /* Hide tab row on step 2 to reduce noise */
-                    if (!(uiState.activeTab == AuthTab.SIGNUP && uiState.signupStep == 2)) {
-                        TabSwitcher(selected = uiState.activeTab, onSelect = viewModel::switchTab)
-                        Spacer(Modifier.height(24.dp))
-                    }
-
                     AnimatedContent(
                         targetState = uiState.activeTab to uiState.signupStep,
                         transitionSpec = {
@@ -235,17 +228,15 @@ fun LoginScreen(
 private fun AppBrand() {
     Box(
         modifier = Modifier
-            .size(64.dp)
-            .background(Brush.linearGradient(listOf(AccentPrimary, AccentSecondary)), CircleShape),
+            .size(120.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text("B", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Color.White)
+        Image(
+            painter = painterResource(R.drawable.icon),
+            contentDescription = "Bondhu logo"
+        )
     }
-    Spacer(Modifier.height(14.dp))
-    Text("Bondhu", fontSize = 28.sp, fontWeight = FontWeight.Bold,
-        color = TextPrimary, letterSpacing = 1.sp)
-    Text("Connect with friends", fontSize = 13.sp, color = TextSecondary,
-        modifier = Modifier.padding(top = 2.dp))
+    Spacer(Modifier.height(20.dp))
 }
 
 @Composable
@@ -258,37 +249,6 @@ private fun ErrorBanner(message: String) {
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Text(message, color = AccentError, fontSize = 13.sp)
-    }
-}
-
-@Composable
-private fun TabSwitcher(selected: AuthTab, onSelect: (AuthTab) -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(BgPill, RoundedCornerShape(12.dp))
-            .padding(4.dp)
-    ) {
-        listOf(AuthTab.LOGIN to "Login", AuthTab.SIGNUP to "Sign Up").forEach { (tab, label) ->
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .background(
-                        if (selected == tab) AccentPrimary else Color.Transparent,
-                        RoundedCornerShape(10.dp)
-                    )
-                    .clickable { onSelect(tab) }
-                    .padding(vertical = 11.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = label,
-                    color = if (selected == tab) Color.White else TextSecondary,
-                    fontWeight = if (selected == tab) FontWeight.SemiBold else FontWeight.Normal,
-                    fontSize = 15.sp
-                )
-            }
-        }
     }
 }
 
@@ -505,7 +465,7 @@ private fun SignupStep1Pane(
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Sign-up step 2 pane
+// Sign-up step 2 pane  ← FIXED: StepIndicator is now truly centered
 // ─────────────────────────────────────────────────────────────────────────────
 @Composable
 private fun SignupStep2Pane(
@@ -517,11 +477,13 @@ private fun SignupStep2Pane(
     onBack: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) {
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = TextSecondary)
             }
-            Spacer(Modifier.width(4.dp))
             StepIndicator(currentStep = 2, totalSteps = 2)
         }
 

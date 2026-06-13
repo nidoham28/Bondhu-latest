@@ -87,3 +87,20 @@ val DarkSurfaceVariant   = Color(0xFF3D4A53)   // Chips, input fills, icon backg
 val DarkOnSurfaceVariant = Color(0xFFBDCBD6)
 val DarkOutline          = Color(0xFF879AA5)
 val DarkOutlineVariant   = Color(0xFF3D4A53)
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Palette
+// ─────────────────────────────────────────────────────────────────────────────
+val BgDeep          = Color(0xFF0D1117)
+val BgSurface       = Color(0xFF161B22)
+val BgInput         = Color(0xFF0D1117)
+val BgPill          = Color(0xFF0D1117)
+val AccentPrimary   = Color(0xFF6E57E0)
+val AccentSecondary = Color(0xFF9B8AFF)
+val AccentGreen     = Color(0xFF3DD68C)
+val AccentError     = Color(0xFFFF6B6B)
+val TextPrimary     = Color(0xFFF0F6FC)
+val TextSecondary   = Color(0xFF8B949E)
+val TextHint        = Color(0xFF484F58)
+val BorderDefault   = Color(0xFF30363D)
+val BorderFocused   = Color(0xFF6E57E0)
