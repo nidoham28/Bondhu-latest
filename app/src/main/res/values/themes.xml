@@ -9,7 +9,6 @@
     <style name="Theme.Bondhu.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/icon</item>
-        <!-- Duration the icon stays visible (ms). 0 = until you dismiss it manually -->
         <item name="windowSplashScreenAnimationDuration">300</item>
         <item name="postSplashScreenTheme">@style/Theme.Bondhu</item>
     </style>
