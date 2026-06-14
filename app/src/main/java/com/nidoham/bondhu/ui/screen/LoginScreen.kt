@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -64,7 +63,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -73,10 +71,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.nidoham.bondhu.AuthEvent
-import com.nidoham.bondhu.AuthTab
-import com.nidoham.bondhu.LoginViewModel
-import com.nidoham.bondhu.R
+import com.nidoham.bondhu.ui.viewmodel.AuthEvent
+import com.nidoham.bondhu.ui.viewmodel.AuthTab
+import com.nidoham.bondhu.ui.viewmodel.LoginViewModel
 import com.nidoham.bondhu.ui.theme.AccentError
 import com.nidoham.bondhu.ui.theme.AccentGreen
 import com.nidoham.bondhu.ui.theme.AccentPrimary

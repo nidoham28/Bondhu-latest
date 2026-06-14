@@ -21,6 +21,7 @@ import com.nidoham.bondhu.supabase.auth.AuthRepository
 import com.nidoham.bondhu.ui.screen.HomeScreen
 import com.nidoham.bondhu.ui.screen.LoginScreen
 import com.nidoham.bondhu.ui.theme.BondhuTheme
+import com.nidoham.bondhu.ui.viewmodel.LoginViewModel
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 

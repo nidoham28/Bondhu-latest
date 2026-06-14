@@ -1,10 +1,10 @@
-package com.nidoham.bondhu
+package com.nidoham.bondhu.ui.viewmodel
 
 import android.net.Uri
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.nidoham.bondhu.supabase.auth.AuthOperationResult
 import com.nidoham.bondhu.supabase.auth.AuthRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -149,13 +149,14 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            when (val result = authRepository.signIn(state.loginEmail.trim(), state.loginPassword)) {
-                is AuthOperationResult.Success -> {
-                    _uiState.update { it.copy(isLoading = false) }
-                    _events.send(AuthEvent.NavigateToHome)
-                }
-                is AuthOperationResult.Error -> {
-                    _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
+            // ✅ Use AuthResult with isSuccess / exception
+            val result = authRepository.signIn(state.loginEmail.trim(), state.loginPassword)
+            if (result.isSuccess) {
+                _uiState.update { it.copy(isLoading = false) }
+                _events.send(AuthEvent.NavigateToHome)
+            } else {
+                _uiState.update {
+                    it.copy(isLoading = false, errorMessage = result.exception ?: "Sign-in failed")
                 }
             }
         }
@@ -174,18 +175,18 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            when (val result = authRepository.signUp(state.signupEmail.trim(), state.signupPassword)) {
-                is AuthOperationResult.Success -> {
-                    // TODO: persist username + profilePicUri to your profile table here
-                    _uiState.update { it.copy(isLoading = false) }
-                    _events.send(
-                        AuthEvent.ShowSuccessMessage("Account created! Check your email to verify.")
-                    )
-                    // Switch back to login so the user can sign in after confirming email
-                    _uiState.update { it.copy(activeTab = AuthTab.LOGIN, signupStep = 1) }
-                }
-                is AuthOperationResult.Error -> {
-                    _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
+            val result = authRepository.signUp(state.signupEmail.trim(), state.signupPassword)
+            if (result.isSuccess) {
+                // TODO: persist username + profilePicUri to your profile table here
+                _uiState.update { it.copy(isLoading = false) }
+                _events.send(
+                    AuthEvent.ShowSuccessMessage("Account created! Check your email to verify.")
+                )
+                // Switch back to login so the user can sign in after confirming email
+                _uiState.update { it.copy(activeTab = AuthTab.LOGIN, signupStep = 1) }
+            } else {
+                _uiState.update {
+                    it.copy(isLoading = false, errorMessage = result.exception ?: "Sign-up failed")
                 }
             }
         }
@@ -279,7 +280,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 private fun String.isValidEmail(): Boolean =
-    android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 private fun String.isValidUsername(): Boolean =
     matches(Regex("^[a-zA-Z0-9_]+$"))
